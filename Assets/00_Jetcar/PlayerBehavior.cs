@@ -91,7 +91,7 @@ public class PlayerBehavior : MonoBehaviour
 
         rb.AddForce(totalGravity + (-(transform.up * totalGravity.magnitude * 0.15f) + (transform.forward * speed)) + (transform.up * 0.45f + transform.forward).normalized * turboSpeed);
 
-        rb.AddTorque(transform.up * direction * 1000);
+        rb.AddTorque(transform.up * direction * 300);
     }
 
     public void Gas(InputAction.CallbackContext context)
