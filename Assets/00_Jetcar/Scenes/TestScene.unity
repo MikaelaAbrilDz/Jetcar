@@ -297,6 +297,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2844821474920495759, guid: e8a571f2d9ce2c944beb4844071abb13, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6826536155176842539, guid: e8a571f2d9ce2c944beb4844071abb13, type: 3}
       propertyPath: m_Name
       value: Planet_01
@@ -341,10 +345,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2844821474920495759, guid: e8a571f2d9ce2c944beb4844071abb13, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6826536155176842539, guid: e8a571f2d9ce2c944beb4844071abb13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1547729255}
   m_SourcePrefab: {fileID: 100100000, guid: e8a571f2d9ce2c944beb4844071abb13, type: 3}
 --- !u!1 &360911363
 GameObject:
@@ -725,6 +733,33 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &490534186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6826536155176842539, guid: fe636cdb0b80d474192638d9ece90963, type: 3}
+  m_PrefabInstance: {fileID: 2087106243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &490534193
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490534186}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8200880724049433892, guid: 7502683232576d14cb2ceafea234608b, type: 3}
 --- !u!1001 &523208598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1661,6 +1696,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!1 &1547729248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6826536155176842539, guid: e8a571f2d9ce2c944beb4844071abb13, type: 3}
+  m_PrefabInstance: {fileID: 332079919}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1547729255
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547729248}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2012701208078360428, guid: c90e11d8887d79943aa473834861aff8, type: 3}
 --- !u!1001 &1688130710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1952,6 +2014,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2844821474920495759, guid: fe636cdb0b80d474192638d9ece90963, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6826536155176842539, guid: fe636cdb0b80d474192638d9ece90963, type: 3}
       propertyPath: m_Name
       value: Planet_09
@@ -1996,10 +2062,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2844821474920495759, guid: fe636cdb0b80d474192638d9ece90963, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6826536155176842539, guid: fe636cdb0b80d474192638d9ece90963, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 490534193}
   m_SourcePrefab: {fileID: 100100000, guid: fe636cdb0b80d474192638d9ece90963, type: 3}
 --- !u!1 &2137093305
 GameObject:
