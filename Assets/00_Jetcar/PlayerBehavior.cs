@@ -9,6 +9,7 @@ public class PlayerBehavior : MonoBehaviour
     public List<PlanetBehavior> planets = new List<PlanetBehavior>();
     PlanetBehavior mainPlanet;
     Vector3 totalGravity;
+    Vector3 aligningRotation;
     float direction;
     float gravityAddition;
     float turboPower = 500;
@@ -48,20 +49,21 @@ public class PlayerBehavior : MonoBehaviour
         totalGravity = (iMainPlanet.transform.position - transform.position) * ((carMass * iMainPlanet.weight) / Mathf.Pow((iMainPlanet.transform.position - transform.position).magnitude, 2));
         transform.parent = iMainPlanet.transform;
 
-        if ((transform.up - (transform.position - mainPlanet.transform.position).normalized).magnitude > 0.01f)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.position - iMainPlanet.transform.position, out hit, Mathf.Infinity, planetMask) && (transform.up - hit.normal).magnitude > 0.01f)
         {
             Vector3 directionOfMovement = transform.up - (transform.position - mainPlanet.transform.position);
             Vector3 axis = Vector3.Cross(transform.up, (transform.position - mainPlanet.transform.position).normalized).normalized;
             float angle = Mathf.Acos(Vector3.Dot(transform.up, (transform.position - mainPlanet.transform.position).normalized));
-            rb.AddTorque(axis * angle * 50);
+            aligningRotation = axis * angle * 50;
         }
         else if (transform.up != (transform.position - mainPlanet.transform.position).normalized)
         {
-            rb.angularVelocity *= 0.1f;
+            aligningRotation *= 0.1f;
         }
 
         float speed;
-        if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 0.25f;
+        if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 0.75f;
         else speed = 0;
 
         float turboSpeed;
@@ -81,6 +83,8 @@ public class PlayerBehavior : MonoBehaviour
         if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 0.25f;
         else speed = 0;
 
+        print(speed);
+
         float turboSpeed;
         if (turbo) turboSpeed = turboPower;
         else turboSpeed = 0;
@@ -91,7 +95,7 @@ public class PlayerBehavior : MonoBehaviour
 
         rb.AddForce(totalGravity + (-(transform.up * totalGravity.magnitude * 0.15f) + (transform.forward * speed)) + (transform.up * 0.45f + transform.forward).normalized * turboSpeed);
 
-        rb.AddTorque(transform.up * direction * 300);
+        rb.AddTorque((transform.up * direction * 300) + aligningRotation);
     }
 
     public void Gas(InputAction.CallbackContext context)
