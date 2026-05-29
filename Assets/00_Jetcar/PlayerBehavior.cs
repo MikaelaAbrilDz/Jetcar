@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerBehavior : MonoBehaviour
 {
     Rigidbody rb;
-    float carMass ;
+    float carMass;
     public List<PlanetBehavior> planets = new List<PlanetBehavior>();
     PlanetBehavior mainPlanet;
     Vector3 totalGravity;
@@ -15,6 +16,13 @@ public class PlayerBehavior : MonoBehaviour
     float turboPower = 500;
     bool gas, turbo;
     [SerializeField] LayerMask planetMask;
+
+
+    public int stars = 0;
+
+    [SerializeField] private Animator animator;
+
+    private bool collected = false;
 
     PlanetBehavior iMainPlanet
     {
@@ -29,7 +37,7 @@ public class PlayerBehavior : MonoBehaviour
     }
     void Start()
     {
-        rb= GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         carMass = rb.mass;
         rb.centerOfMass -= transform.up;
     }
@@ -134,4 +142,40 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlanetBehavior>()) rb.linearVelocity *= 0.1f;
     }
+
+    public void AddStar()
+    {
+        stars++;
+        StarManager.Instance.AddStar();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Star"))
+        {
+            AddStar();
+
+            Animator anim = other.GetComponent<Animator>();
+
+            if (anim != null)
+            {
+                
+                anim.SetTrigger("Collected");
+
+                
+                other.GetComponent<Collider>().enabled = false;
+
+                
+                Destroy(other.gameObject, 1f);
+            }
+            else
+            {
+                Destroy(other.gameObject);
+            }
+        }
+    }
+
+
+
+
 }
