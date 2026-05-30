@@ -13,7 +13,7 @@ public class PlayerBehavior : MonoBehaviour
     Vector3 aligningRotation;
     float direction;
     float gravityAddition;
-    float turboPower = 500;
+    float turboPower = 1000;
     bool gas, turbo;
     [SerializeField] LayerMask planetMask;
 
@@ -82,13 +82,12 @@ public class PlayerBehavior : MonoBehaviour
         totalGravity = totalGravity * (1 + gravityAddition);
 
 
-        rb.AddForce(totalGravity + (-(transform.up * totalGravity.magnitude * 0.15f) + (transform.forward * speed)) + (transform.up * 0.45f + transform.forward).normalized * turboSpeed);
     }
 
     private void FixedUpdate()
     {
         float speed;
-        if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 0.25f;
+        if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 1.5f;
         else speed = 0;
 
         print(speed);
@@ -155,7 +154,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             AddStar();
 
-            Animator anim = other.GetComponent<Animator>();
+            Animator anim = other.GetComponentInChildren<Animator>();
 
             if (anim != null)
             {

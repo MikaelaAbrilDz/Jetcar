@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6951666594834841633}
-  - component: {fileID: -8551074722851431379}
-  - component: {fileID: -6925402733574205150}
+  - component: {fileID: 1361413220684916800}
   m_Layer: 0
   m_Name: Collectable
   m_TagString: Star
@@ -34,8 +33,8 @@ Transform:
   - {fileID: 3308953226079135749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &-8551074722851431379
-BoxCollider:
+--- !u!135 &1361413220684916800
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -53,26 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.819751, y: 5.718569, z: 1.7357788}
-  m_Center: {x: 0.082913995, y: -0.21299839, z: -0.05052185}
---- !u!114 &-6925402733574205150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4056955688028901331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa8128da135c6941a3447e2111e17ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerBehavior
-  planets: []
-  planetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  stars: 0
-  animator: {fileID: 0}
+  m_Radius: 3.29
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3053856231680184302
 PrefabInstance:
   m_ObjectHideFlags: 0
