@@ -31,6 +31,6 @@ public class StarManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        starText.text = stars + "/20";
+        starText.text = stars + "/32";
     }
 }
