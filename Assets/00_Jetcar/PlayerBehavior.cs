@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -14,9 +15,12 @@ public class PlayerBehavior : MonoBehaviour
     float direction;
     float gravityAddition;
     float turboPower = 1000;
-    bool gas, turbo;
+    bool gas, backGas, turbo, isDead;
+    float speed, turboSpeed;
+    int speedFwd = 1;
     [SerializeField] LayerMask planetMask;
-
+    [SerializeField] Transform blackHole;
+    [SerializeField] CinemachineCamera cam;
 
     public int stars = 0;
 
@@ -44,6 +48,10 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         totalGravity = Vector3.zero;
         PlanetBehavior mPlanet = planets[0];
         foreach (PlanetBehavior p in planets)
@@ -56,8 +64,13 @@ public class PlayerBehavior : MonoBehaviour
         iMainPlanet = mPlanet;
         totalGravity = (iMainPlanet.transform.position - transform.position) * ((carMass * iMainPlanet.weight) / Mathf.Pow((iMainPlanet.transform.position - transform.position).magnitude, 2));
         transform.parent = iMainPlanet.transform;
+        print(totalGravity.magnitude);
+        if (totalGravity.magnitude < 50)
+        {
+            StartCoroutine(Die());
+        }
 
-        RaycastHit hit;
+            RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.position - iMainPlanet.transform.position, out hit, Mathf.Infinity, planetMask) && (transform.up - hit.normal).magnitude > 0.01f)
         {
             Vector3 directionOfMovement = transform.up - (transform.position - mainPlanet.transform.position);
@@ -70,11 +83,10 @@ public class PlayerBehavior : MonoBehaviour
             aligningRotation *= 0.1f;
         }
 
-        float speed;
-        if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 0.75f;
+
+        if ((gas || backGas) && rb.linearVelocity.magnitude < 50 && Physics.Raycast(transform.position, -transform.up, 5, planetMask)) speed = speedFwd * totalGravity.magnitude * 0.75f;
         else speed = 0;
 
-        float turboSpeed;
         if (turbo) turboSpeed = turboPower;
         else turboSpeed = 0;
 
@@ -86,17 +98,6 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float speed;
-        if (gas && rb.linearVelocity.magnitude < 20 && Physics.Raycast(transform.position, -transform.up, 1, planetMask)) speed = totalGravity.magnitude * 1.5f;
-        else speed = 0;
-
-        print(speed);
-
-        float turboSpeed;
-        if (turbo) turboSpeed = turboPower;
-        else turboSpeed = 0;
-
-
         totalGravity = totalGravity * (1 + gravityAddition);
 
 
@@ -124,6 +125,19 @@ public class PlayerBehavior : MonoBehaviour
         if (context.performed) gravityAddition = 5;
         if (context.canceled) gravityAddition = 0;
     }
+    public void GoBack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            backGas = true;
+            speedFwd = -1;
+        }
+        if (context.canceled)
+        {
+            backGas = false;
+            speedFwd = 1;
+        }
+    }
     public void AddPlanet(PlanetBehavior p)
     {
         if (!planets.Contains(p)) planets.Add(p);
@@ -131,6 +145,23 @@ public class PlayerBehavior : MonoBehaviour
     public void RemovePlanet(PlanetBehavior p)
     {
         if (planets.Contains(p) && planets.Count > 1) planets.Remove(p);
+    }
+    public void AddStar()
+    {
+        stars++;
+        StarManager.Instance.AddStar();
+    }
+    IEnumerator Die()
+    {
+        isDead = true;
+        cam.Priority = -1;
+        yield return new WaitForSeconds(5f);
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        speed = 0;
+        turboSpeed = 0;
+        totalGravity = (blackHole.position - transform.position) * ((carMass * 9999) / Mathf.Pow((blackHole.position - transform.position).magnitude, 2));
+        transform.position = blackHole.position + Vector3.up * 50;
     }
     private void OnDrawGizmos()
     {
@@ -140,12 +171,6 @@ public class PlayerBehavior : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<PlanetBehavior>()) rb.linearVelocity *= 0.1f;
-    }
-
-    public void AddStar()
-    {
-        stars++;
-        StarManager.Instance.AddStar();
     }
 
     private void OnTriggerEnter(Collider other)

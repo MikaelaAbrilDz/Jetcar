@@ -48,7 +48,7 @@ Material:
     - _RotationAmount: -0.5
     - _TwirlStrength: 12.5
     m_Colors:
-    - _Color: {r: 150.04051, g: 0, b: 1245.9886, a: 1}
+    - _Color: {r: 11.313708, g: 2.0409043, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8536331803764823454
